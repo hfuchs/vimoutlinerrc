@@ -1,0 +1,88 @@
+" 2009-08-11, Created by H Fuchs <hagen.fuchs@physik.tu-dresden.de>
+" Adding UUID-functionality to vimoutliner
+" 2010-02-26, Adding complete jump-suite.  To define a jump target, just
+" place square brackets around it: '[target]'.  To define a jump, use
+" '[-> target]' or just '[> target]'.  Nifty, I think.
+" 2010-03-24, Deactivated the UUID-parts - I'm not using the anymore.
+
+
+" --- Command Bindings
+"  ,,u  -  Insert UUID (as jump target)
+"  ,,U  -  Convert UUID (as jump origin)
+"  ,,j  -  Jump from origin to target
+"
+" Note: The '~<esc>[...]x' gives a known position, as leaving insert
+" mode with ESC jumps one position back - unless at the beginning of the
+" line.
+"nmap <buffer> <localleader>u :call InsertTargetID()<CR>
+"imap <buffer> <localleader>u ~<ESC>:call InsertTargetID()<CR>s
+"nmap <buffer> <localleader>U :call ConvertTargetIDtoJumpID()<CR>
+"imap <buffer> <localleader>U ~<ESC>:call ConvertTargetIDtoJumpID()<CR>s
+nmap <buffer> <localleader>j :call JumpToTargetID()<CR>
+" 2011-08-08, Add mappings to my own abbreviations.
+"nunmap <buffer> <localleader>t
+"nunmap <buffer> <localleader>d
+nmap <buffer> <localleader>t tme<CR>
+nmap <buffer> <localleader>d tdy<CR>
+
+" 2010-03-01, Convenience-definition: Open file in window with ,,o
+" 2010-03-24, Useless.  Plus, I might need the o-binding for cycling
+" jump origins.  :)
+"nmap <buffer> <localleader>o <c-w>f
+
+
+" --- Function Definitions
+" InsertUUID {{{1
+" TODO Descriptoi
+function! InsertUUID()
+    execute "normal! i" . substitute(system('uuid'), '\n', '', '')
+endfunction
+
+function! InsertTargetID()
+    normal! i[]
+    call InsertUUID()
+    normal! ll
+endfunction
+"}}}1
+
+" ConvertTargetIDtoJumpID - TODO Description {{{1
+function! ConvertTargetIDtoJumpID()
+    let line = getline(".") " Contents of the current line
+    " TODO Generalize or Delete.
+    let uuid_pattern  = '\m\[\(\x\{8}-\x\{4}-\x\{4}-\x\{4}-\x\{12}\)\]'
+    if line =~ uuid_pattern
+        call setline(".", substitute(line, uuid_pattern, '\[-> \1\]', ""))
+    else
+        echo "No ID found on this line."
+    endif
+endfunction
+"}}}1
+
+" JumpToTargetID - TODO Description {{{1
+function! JumpToTargetID()
+    " Note: If there are two jump-statements on the same line, the last
+    " one will be used - silently.
+    let timeout = 1000 " Stop search after a second
+    let line    = getline('.')
+    " The pattern matches the complete line and saves the jump target
+    " TODO 2011-09-05, Add ability to wrap around newlines!  See VIM's
+    " '\_' modifier.
+    let pattern = '\m^.*\[-\?>\s\+\([^\[\]]\+\)\].*$'
+    " Triple backslash to protect the backslash *and* the bracket.
+    " TODO Could've just \M, right?
+    let uuid    = substitute(line, pattern, '\\\[\1\\\]', '')
+    if uuid == line " TODO Use match() instead of substitute().
+        echo "No ID found on this line."
+        return
+    else
+        " 2010-03-24, Don't need setpos(), search() itsself already sets
+        " the cursor (parameter 's' sets  a jump mark)!
+        if search(uuid, 'sw', 0, timeout) == 0
+            echo "Target ID not found!"
+        endif
+    endif
+endfunction
+" }}}1
+
+
+" vim:ft=vim:foldmethod=marker
