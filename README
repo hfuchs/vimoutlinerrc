@@ -1,0 +1,68 @@
+Vimoutliner Config & Tweaks
+=============================
+
+I assume you know Vim and Vimoutliner already.  If not, how do you cope?
+
+This vimoutlinerrc (readably saved as ~/.vimoutlinerrc) will add the
+'<leader>j' ("jump to") command that, if positioned on a string like
+
+    [> link to somewhere, yay!]
+
+will jump to the nearest line that contains
+
+    [link to somewhere, yay!]
+
+(also, [> link] will jump to [link], in case you were wondering ;).
+This is a very handy interlinking system that already enhances
+Vimoutliner's considerable usability by a factor of 10 (yes, I'm
+basically jumping around in my todo file all day long).  Still there are
+some
+
+Caveats
+--------
+
+  1. Multiple targets (not a problem in practice)?
+
+  2. Multiple links on one line?  A /real/ problem in practice.
+     Currently, '<leader>j' will use the last reference on the line, so
+     if invoked on a line like
+
+        [> a] foo [> b]
+
+     it'll take you to the next occurence of [b] - regardless of the
+     cursor's position.  This needs to change.
+
+  3. (Related) Currently, in order to reflect a hierarchy, say
+
+         foo
+            a
+            b
+         bar
+            a
+            b
+
+     you'd need to add references that explicitly incorporate their
+     position in the hierarchy,
+
+         [foo]
+            a, [foo a]
+            b, [foo b]
+         [bar]
+            a, [bar a]
+            b, [bar b]
+
+      an obvious violation of DRY and a obstacle to reorganizing your
+      outline freely.  [> bar > a] (or something like that) should work
+      as expected with the more natural
+
+         [foo]
+            [a]
+            [b]
+         [bar]
+            [a]
+            [b]
+
+(Still reading?  The README of a project that covers a specific rc-file
+of an editor plugin?  Enganging writing - that's what it is.  Engaging
+writing.)
+
