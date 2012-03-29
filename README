@@ -15,22 +15,20 @@ will jump to the nearest line that contains
 (also, [> link] will jump to [link], in case you were wondering ;).
 This is a very handy interlinking system that already enhances
 Vimoutliner's considerable usability by a factor of 10 (yes, I'm
-basically jumping around in my todo file all day long).  Still there are
-some
+basically jumping around in my todo file all day long).
+
+Multiple links on one line have been possible since 2012-03-29.  Just
+move the cursor somewhere inside the link's brackets.  Otherwise still
+jumps to the last link.
+
+There are some
 
 Caveats
 --------
 
   1. Multiple targets (not a problem in practice)?
 
-  2. Multiple links on one line?  A /real/ problem in practice.
-     Currently, '<leader>j' will use the last reference on the line, so
-     if invoked on a line like
-
-        [> a] foo [> b]
-
-     it'll take you to the next occurence of [b] - regardless of the
-     cursor's position.  This needs to change.
+  2. [solved] Multiple links on one line.
 
   3. (Related) Currently, in order to reflect a hierarchy, say
 
