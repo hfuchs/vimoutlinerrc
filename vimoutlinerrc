@@ -4,7 +4,6 @@
 " for Vimoutliner.  To define a target, just place square brackets
 " around it: '[target]'.  To link to it, simply write '[-> target]' or
 " just '[> target]' and hit '<localleader>j'.  Nifty, I think.
-" 2012-04-02, Works over newlines, too.
 "
 " In addition, there's a slightly hacky autocommand definition here that
 " I need to protect myself from the constant re-evaluation of foldexpr.
@@ -69,7 +68,7 @@ function! JumpToTargetID()
             " search() later without magic, so I quote everything here).
             let l:end    = matchend(l:line, l:pattern, 0, l:i)
             let l:id     = matchstr(l:line, l:pattern, 0, l:i)
-            let l:target = substitute(l:id, '\s*:\?\s\+', ' ', '')
+            let l:target = substitute(l:id, '\s*:\s\+', ' ', '')
             let l:target = substitute(l:target, l:pattern, '\\\[\1\\\]', '')
             let l:links += [[ l:begin, l:end, l:target ]]
             let l:i += 1
