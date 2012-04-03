@@ -1,0 +1,10 @@
+[Il grande silenzio]
+	: 2012-04-03, This is the target.
+
+
+Somewhere else
+	: 2012-04-03, And here's the link [> Il grande silenzio].
+	:
+	: Here it is again, but this time enough crap on the line, [> Il grande
+	: silenzio], that the link breaks over EOL.
+
