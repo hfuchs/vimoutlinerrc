@@ -19,10 +19,10 @@ basically jumping around in my todo file all day long).
 
 Multiple links on one line have been possible since 2012-03-29.  Just
 move the cursor somewhere inside the link's brackets.  Otherwise still
-jumps to the last link.  Since 2012-04-02, the link specification might
+jumps to the last link.  Since 2012-04-03, the link specification might
 even stretch over two lines (does emphatically /not/ work with body text
 marked only by a single space [perhaps some day, though I wouldn't bet
-on it].)
+on it].)  See test.otl for a sort-of real-life example.
 
 There are some
 
