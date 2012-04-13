@@ -1,10 +1,26 @@
 [Il grande silenzio]
 	: 2012-04-03, This is the target.
 
-
 Somewhere else
 	: 2012-04-03, And here's the link [> Il grande silenzio].
 	:
 	: Here it is again, but this time enough crap on the line, [> Il grande
 	: silenzio], that the link breaks over EOL.
+	 2012-04-13, NEW!  Works with body text that starts with a space [> Il
+	 grande silenzio].
 
+Regression Tests
+	[Target: with colon]
+	[Target1]
+	[Target2]
+	: 2012-04-13, colon-in-target, (FIXED).
+	: [> Target: with colon].
+	:
+	: 2012-04-13, wrong-last-link-selection.
+	: Multiple links, [> Il grande silenzio] on these two lines, [> Target1]
+	: and [> Target2].  If not on any link, then the last link on the
+	: *current* line should be selected!
+	:
+	: 2012-04-27, wrong-offset, (FIXED).
+	: When on the first target's '>' character, jumps to second target!  [>
+	: Target1], [> Target2]
